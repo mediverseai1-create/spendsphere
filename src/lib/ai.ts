@@ -16,7 +16,7 @@ export const aiConfigured = () => !!process.env.GEMINI_API_KEY;
 export async function explain(facts: unknown, question?: string): Promise<Insight> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new Error('AI is not configured. Set GEMINI_API_KEY.');
-  const model = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+  const model = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
   const prompt = [
     'You are a finance assistant inside a spend management app. All figures below were calculated by the application and are authoritative.',
     'Use ONLY these figures. Never compute new totals, never invent data, and say so if the data cannot answer a question. Amounts are in USD.',
@@ -28,7 +28,7 @@ export async function explain(facts: unknown, question?: string): Promise<Insigh
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: 'application/json', temperature: 0.2 } }),
-    signal: AbortSignal.timeout(25000),
+    signal: AbortSignal.timeout(40000),
   });
   if (res.status === 429) throw new Error('The AI provider is rate limiting requests. Try again shortly.');
   if (!res.ok) throw new Error(`AI request failed (${res.status})`);

@@ -134,7 +134,7 @@ create policy profiles_update on public.profiles for update using (id = auth.uid
 create policy org_read on public.organizations for select using (public.is_member(id));
 create policy org_update on public.organizations for update using (public.is_admin(id)) with check (public.is_admin(id));
 -- plan/plan_status are changed only by the service role (verified payment webhook)
-revoke update (plan, plan_status, payment_customer_id) on public.organizations from authenticated;
+-- plan columns locked down in 0002_lock_plan_columns.sql
 
 create policy mem_read on public.memberships for select using (public.is_member(org_id));
 create policy mem_admin_write on public.memberships for update using (public.is_admin(org_id)) with check (public.is_admin(org_id));
