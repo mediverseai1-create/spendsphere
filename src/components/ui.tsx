@@ -3,8 +3,13 @@ import type { ReactNode } from 'react';
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2 text-lg font-bold tracking-tight">
-      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden><circle cx="13" cy="13" r="12" fill="#D93A0B" /><path d="M3 15c4 3 10 3 20-4" stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" /><path d="M6 6c4 2 9 2 14 0" stroke="#fff" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity=".7" /></svg>
+    <span className="inline-flex items-center gap-2 text-[19px] font-semibold tracking-[-0.03em]">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+        <path d="M12 0A12 12 0 0 0 0 12h12z" fill={light ? '#fff' : '#15191E'} />
+        <path d="M12 24a12 12 0 0 0 12-12H12z" fill="#D93A0B" />
+        <path d="M12 0v12h12A12 12 0 0 0 12 0z" fill={light ? '#fff' : '#15191E'} opacity=".18" />
+        <path d="M0 12h12v12A12 12 0 0 1 0 12z" fill={light ? '#fff' : '#15191E'} opacity=".18" />
+      </svg>
       <span className={light ? 'text-white' : 'text-ink'}>SpendSphere</span>
     </span>
   );
