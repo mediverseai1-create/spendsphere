@@ -1,15 +1,21 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
+export function LogoMark({ size = 26, light = false }: { size?: number; light?: boolean }) {
+  const ink = light ? '#FFFFFF' : '#15191E';
+  const s = 'M16 5.2C16 2.6 13.4 1.6 10 1.6S4 3.1 4 5.4 6.6 8.7 10 8.4s6 .9 6 3.6S13.4 14.6 10 14.6 4 13.4 4 11';
+  return (
+    <svg width={size * 0.8} height={size} viewBox="0 0 20 28" fill="none" strokeWidth="2.6" strokeLinecap="round" aria-hidden>
+      <path d={s} stroke={ink} transform="translate(0 -.2)" />
+      <path d={s} stroke="#D93A0B" transform="translate(0 12.4)" />
+      <rect x="16.4" y="0.4" width="3.2" height="3.2" fill="#D93A0B" stroke="none" />
+    </svg>
+  );
+}
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2 text-[19px] font-semibold tracking-[-0.03em]">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
-        <path d="M12 0A12 12 0 0 0 0 12h12z" fill={light ? '#fff' : '#15191E'} />
-        <path d="M12 24a12 12 0 0 0 12-12H12z" fill="#D93A0B" />
-        <path d="M12 0v12h12A12 12 0 0 0 12 0z" fill={light ? '#fff' : '#15191E'} opacity=".18" />
-        <path d="M0 12h12v12A12 12 0 0 1 0 12z" fill={light ? '#fff' : '#15191E'} opacity=".18" />
-      </svg>
+      <LogoMark light={light} />
       <span className={light ? 'text-white' : 'text-ink'}>SpendSphere</span>
     </span>
   );
@@ -48,5 +54,5 @@ export function Bar({ pct }: { pct: number }) {
   return <div className="h-2 w-full rounded-full bg-ink-100" role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}><div className={`h-2 rounded-full ${pct > 100 ? 'bg-bad' : pct > 80 ? 'bg-warn' : 'bg-ok'}`} style={{ width: `${p}%` }} /></div>;
 }
 export function UpgradeNote({ feature }: { feature: string }) {
-  return <Empty title={`${feature} is part of the Growth plan`} desc="Upgrade to unlock it for your whole team."><Link href="/billing" className="btn-primary">View plans</Link></Empty>;
+  return <Empty title={`${feature} is included in Growth`} desc="Upgrade the workspace to enable it for every team member."><Link href="/billing" className="btn-primary">Go to Billing</Link></Empty>;
 }

@@ -24,9 +24,9 @@ export default async function Transactions({ searchParams }: { searchParams: Pro
       <Flash e={sp.e} ok={sp.ok} />
       <details className="card mb-6 p-5">
         <summary className="cursor-pointer font-semibold">Record a transaction</summary>
-        <form action={createTransaction} encType="multipart/form-data" className="mt-4 grid gap-4 sm:grid-cols-2">
+        <form action={createTransaction} className="mt-4 grid gap-4 sm:grid-cols-2">
           <Field label="Type"><select className="input" name="source"><option value="card">Card charge</option><option value="reimbursement">Reimbursement</option></select></Field>
-          <Field label="Card (card charges)"><select className="input" name="card_id" defaultValue=""><option value="" disabled>Select card</option>{(cards ?? []).map(k => <option key={k.id} value={k.id}>{k.name} ••{k.last4}</option>)}</select></Field>
+          <Field label="Card (card charges)"><select className="input" name="card_id" defaultValue=""><option value="" disabled>Select card</option>{(cards ?? []).map(k => <option key={k.id} value={k.id}>{k.name} ending {k.last4}</option>)}</select></Field>
           <Field label="Merchant"><input className="input" name="merchant" required minLength={2} maxLength={80} /></Field>
           <Field label="Amount (USD)"><input className="input" name="amount" inputMode="decimal" required placeholder="49.00" /></Field>
           <Field label="Category"><select className="input" name="category" required>{CATEGORIES.map(k => <option key={k}>{k}</option>)}</select></Field>
@@ -49,7 +49,7 @@ export default async function Transactions({ searchParams }: { searchParams: Pro
               <td className="td"><p className="font-medium">{r.merchant}</p>
                 <p className="text-xs text-ink-500">{r.source === 'reimbursement' ? 'Reimbursement' : ''}{r.memo ? ` ${r.memo}` : ''}{r.receipt_path && signed.get(r.receipt_path) && <> · <a className="text-brand underline" href={signed.get(r.receipt_path)} target="_blank" rel="noreferrer">Receipt</a></>}</p>
                 {r.flags?.length > 0 && <div className="mt-1 flex flex-wrap gap-1">{r.flags.map((f: string) => <Badge key={f} tone="warn">{f}</Badge>)}</div>}</td>
-              <td className="td">{r.cards ? `${r.cards.name} ••${r.cards.last4}` : '-'}</td>
+              <td className="td">{r.cards ? `${r.cards.name} (${r.cards.last4})` : '-'}</td>
               <td className="td">{r.category}</td>
               <td className="td"><Badge tone={statusTone(r.status)}>{label(r.status)}</Badge></td>
               <td className="td text-right tabular-nums">{money(r.amount_cents)}</td>

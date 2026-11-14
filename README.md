@@ -23,7 +23,6 @@ Reference audit and design notes: [docs/AUDIT.md](docs/AUDIT.md).
 | `NEXT_PUBLIC_PAYMENT_LINK_GROWTH` | Your Stripe Payment Link for Growth |
 | `STRIPE_WEBHOOK_SECRET` | Signing secret for the webhook endpoint |
 | `STRIPE_PAYMENT_LINK_ID_GROWTH` | The `plink_...` ID, so the webhook can map a payment to the Growth plan |
-| `CONTACT_EMAIL` | Shown on the contact page |
 
 ## Payments
 The billing page appends `client_reference_id=<org id>` to your payment link. Point a Stripe webhook at `/api/webhooks/payments` for `checkout.session.completed`, `customer.subscription.deleted` and `invoice.payment_failed`. Plans change only after the signature is verified and payment is confirmed. Returning from checkout never activates a plan. `plan` and `plan_status` columns cannot be written by signed-in users (column grants plus a trigger, migration 0002).

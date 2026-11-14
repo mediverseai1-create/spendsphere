@@ -14,7 +14,7 @@ async function origin() {
 function safeNext(n: FormDataEntryValue | null) { const s = String(n ?? ''); return s.startsWith('/') && !s.startsWith('//') ? s : '/dashboard'; }
 
 export async function signIn(fd: FormData) {
-  if (!hasSupabase()) back('/login', 'Supabase is not configured');
+  if (!hasSupabase()) back('/login', 'The service is temporarily unavailable. Try again shortly');
   const p = creds.safeParse({ email: fd.get('email'), password: fd.get('password') });
   if (!p.success) back('/login', p.error.issues[0].message);
   const supabase = await createClient();
@@ -24,7 +24,7 @@ export async function signIn(fd: FormData) {
 }
 
 export async function signUp(fd: FormData) {
-  if (!hasSupabase()) back('/signup', 'Supabase is not configured');
+  if (!hasSupabase()) back('/signup', 'The service is temporarily unavailable. Try again shortly');
   const p = creds.extend({ name: z.string().trim().min(2, 'Enter your name'), company: z.string().trim().min(2, 'Enter your company name') })
     .safeParse({ email: fd.get('email'), password: fd.get('password'), name: fd.get('name'), company: fd.get('company') });
   if (!p.success) back('/signup', p.error.issues[0].message);

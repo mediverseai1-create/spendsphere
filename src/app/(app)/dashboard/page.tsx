@@ -24,10 +24,10 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const empty = !rows.length && !(cards.count);
   return (
     <>
-      <PageHeader title={`Welcome, ${c.name.split(' ')[0]}`} desc={`${c.orgName} · ${planFor(c.plan).name} plan`} />
+      <PageHeader title="Overview" desc={`${c.orgName}, ${planFor(c.plan).name} plan`} />
       <Flash e={sp.e} ok={sp.ok} />
       {empty ? (
-        <Empty title="Your workspace is empty" desc="Create your first card to start tracking spend, or load a small set of sample data to explore.">
+        <Empty title="No spend recorded yet" desc="Issue your first card to start controlling spend, or load sample data to see the workspace populated.">
           <div className="flex flex-wrap justify-center gap-2">
             {mgr && <Link href="/cards" className="btn-primary">Create a card</Link>}
             {c.role === 'admin' && <form action={loadSampleData}><button className="btn-ghost">Load sample data</button></form>}

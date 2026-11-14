@@ -15,7 +15,7 @@ export const aiConfigured = () => !!process.env.GEMINI_API_KEY;
  */
 export async function explain(facts: unknown, question?: string): Promise<Insight> {
   const key = process.env.GEMINI_API_KEY;
-  if (!key) throw new Error('AI is not configured. Set GEMINI_API_KEY.');
+  if (!key) throw new Error('AI analysis is temporarily unavailable.');
   const model = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
   const prompt = [
     'You are a finance assistant inside a spend management app. All figures below were calculated by the application and are authoritative.',

@@ -22,7 +22,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
         <NavLinks items={items as [string, string][]} />
         <div className="hidden border-t border-ink-100 p-4 text-xs md:block">
-          <p className="truncate font-medium">{c.name}</p><p className="truncate text-ink-500">{c.email} · {c.role}</p>
+          <p className="truncate font-medium">{c.name}</p><p className="truncate text-ink-500">{c.email}, {c.role}</p>
           <form action={signOut}><button className="mt-2 font-semibold text-brand underline">Sign out</button></form>
         </div>
       </aside>

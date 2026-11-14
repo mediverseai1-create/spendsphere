@@ -19,7 +19,7 @@ export default async function Cards({ searchParams }: { searchParams: Promise<{ 
   const limit = planFor(c.plan).cards;
   return (
     <>
-      <PageHeader title="Cards" desc="Virtual cards with limits and category controls. SpendSphere tracks spend against each card; it does not issue payment cards." />
+      <PageHeader title="Cards" desc="Virtual cards with spend limits and category controls. SpendSphere tracks and enforces spend per card. It does not issue payment cards." />
       <Flash e={sp.e} ok={sp.ok} />
       {mgr && (
         <details className="card mb-6 p-5">
@@ -42,7 +42,7 @@ export default async function Cards({ searchParams }: { searchParams: Promise<{ 
             const s = spent(k.id, k.limit_period); const pct = (s / Number(k.spend_limit_cents)) * 100;
             return (
               <div key={k.id} className="card p-5">
-                <div className="flex items-start justify-between"><div><p className="font-semibold">{k.name}</p><p className="text-xs text-ink-500">•••• {k.last4} · {names.get(k.holder_id) ?? 'Member'}</p></div><Badge tone={statusTone(k.status)}>{label(k.status)}</Badge></div>
+                <div className="flex items-start justify-between"><div><p className="font-semibold">{k.name}</p><p className="text-xs text-ink-500">Card ending {k.last4} · {names.get(k.holder_id) ?? 'Member'}</p></div><Badge tone={statusTone(k.status)}>{label(k.status)}</Badge></div>
                 <div className="mt-4 flex justify-between text-sm"><span>{money(s)} spent</span><span className="text-ink-500">of {money(k.spend_limit_cents)} {k.limit_period === 'monthly' ? '/ month' : 'total'}</span></div>
                 <div className="mt-2"><Bar pct={pct} /></div>
                 {k.allowed_categories.length > 0 && <p className="mt-3 text-xs text-ink-500">Allowed: {k.allowed_categories.join(', ')}</p>}

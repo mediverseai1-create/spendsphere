@@ -4,19 +4,19 @@ export const PLANS: Record<PlanId, {
   budgets: boolean; policies: boolean; features: string[];
 }> = {
   starter: {
-    name: 'Starter', price: '$0', blurb: 'For small teams getting spend under control.',
+    name: 'Starter', price: '$0', blurb: 'Spend control and AI analysis for early-stage teams.',
     cards: 5, members: 5, aiPerMonth: 5, budgets: false, policies: false,
-    features: ['Up to 5 virtual cards', 'Up to 5 team members', 'Transactions and receipts', 'Bill pay approvals', '5 AI insights per month'],
+    features: ['Up to 5 virtual cards', 'Up to 5 team members', 'Transactions and receipt capture', 'Bill approvals', '5 AI analyses per month'],
   },
   growth: {
-    name: 'Growth', price: '$12', blurb: 'Policies, live budgets and unlimited cards.',
+    name: 'Growth', price: '$12', blurb: 'Policy automation, live budgets and forecasting for scaling companies.',
     cards: Infinity, members: Infinity, aiPerMonth: 100, budgets: true, policies: true,
-    features: ['Unlimited virtual cards and members', 'Spend policies and approval rules', 'Live budgets', '100 AI insights per month', 'Priority support'],
+    features: ['Unlimited virtual cards and members', 'Spend policies and automated approvals', 'Live budgets and month-end forecast', '100 AI analyses per month', 'Priority support'],
   },
   enterprise: {
-    name: 'Enterprise', price: 'Custom', blurb: 'For multi-entity finance teams.',
+    name: 'Enterprise', price: 'Custom', blurb: 'Custom terms for multi-entity finance organizations.',
     cards: Infinity, members: Infinity, aiPerMonth: 1000, budgets: true, policies: true,
-    features: ['Everything in Growth', 'Named account manager', 'Custom onboarding', 'Security review and SLAs'],
+    features: ['Everything in Growth', 'Named account manager', 'Custom onboarding', 'Security review and service levels', '1,000 AI analyses per month'],
   },
 };
 export const growthLink = () => process.env.NEXT_PUBLIC_PAYMENT_LINK_GROWTH || '';

@@ -11,7 +11,7 @@ export async function updateSession(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isProtected = PROTECTED.some(p => path === p || path.startsWith(p + '/'));
   if (!url || !key) {
-    if (isProtected) return NextResponse.redirect(new URL('/login?e=Supabase+is+not+configured', request.url));
+    if (isProtected) return NextResponse.redirect(new URL('/login?e=The+service+is+temporarily+unavailable', request.url));
     return response;
   }
   const supabase = createServerClient(url, key, {

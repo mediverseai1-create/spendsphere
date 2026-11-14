@@ -17,27 +17,24 @@ export default async function Billing() {
   const href = link ? `${link}${link.includes('?') ? '&' : '?'}client_reference_id=${c.orgId}` : '';
   return (
     <>
-      <PageHeader title="Billing" desc="Your plan and usage." action={<Badge tone={c.planStatus === 'active' ? 'ok' : 'bad'}>{c.planStatus}</Badge>} />
+      <PageHeader title="Billing" desc="Plan, limits and usage for this workspace." action={<Badge tone={c.planStatus === 'active' ? 'ok' : 'bad'}>{c.planStatus}</Badge>} />
       <div className="grid gap-4 sm:grid-cols-4">
         <Stat label="Current plan" value={plan.name} />
         <Stat label="Cards" value={`${cards ?? 0} / ${cap(plan.cards)}`} />
         <Stat label="Members" value={`${members ?? 0} / ${cap(plan.members)}`} />
-        <Stat label="AI insights" value={`${u?.count ?? 0} / ${plan.aiPerMonth}`} sub="This month" />
+        <Stat label="AI analyses" value={`${u?.count ?? 0} / ${plan.aiPerMonth}`} sub="This month" />
       </div>
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {(Object.keys(PLANS) as PlanId[]).map(k => (
           <div key={k} className={`card flex flex-col p-5 ${k === c.plan ? 'border-ink ring-1 ring-ink' : ''}`}>
             <p className="font-semibold">{PLANS[k].name} {k === c.plan && <Badge tone="ok">Current</Badge>}</p>
             <p className="mt-2 text-2xl font-semibold">{PLANS[k].price}{k === 'growth' && <span className="text-sm font-normal text-ink-500"> / user / mo</span>}</p>
-            <ul className="mt-3 flex-1 space-y-1 text-sm text-ink-700">{PLANS[k].features.map(f => <li key={f}>✓ {f}</li>)}</ul>
-            {k === 'growth' && c.plan === 'starter' && c.role === 'admin' && (href
-              ? <a href={href} className="btn-primary mt-4">Upgrade to Growth</a>
-              : <p className="mt-4 text-xs text-ink-500">Checkout is not configured yet (NEXT_PUBLIC_PAYMENT_LINK_GROWTH).</p>)}
-            {k === 'enterprise' && c.plan !== 'enterprise' && <a href="/contact" className="btn-ghost mt-4">Contact us</a>}
-          </div>
+            <ul className="mt-3 flex-1 space-y-1 text-sm text-ink-700">{PLANS[k].features.map(f => <li key={f} className="flex gap-2"><span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />{f}</li>)}</ul>
+            {k === 'growth' && c.plan === 'starter' && c.role === 'admin' && href && <a href={href} className="btn-primary mt-4">Upgrade</a>}
+                      </div>
         ))}
       </div>
-      <p className="mt-6 text-xs text-ink-500">Plans change only after your payment is confirmed by our payment provider. Returning from checkout does not activate a plan by itself; it can take a minute to appear. To cancel or downgrade, contact support.</p>
+      <p className="mt-6 text-xs text-ink-500">Plans change only after the payment provider confirms payment. After checkout, the new plan appears within a minute.</p>
     </>
   );
 }
