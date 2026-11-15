@@ -1,23 +1,28 @@
-export type PlanId = 'starter' | 'growth' | 'enterprise';
+export type PlanId = 'starter' | 'growth' | 'scale';
 export const PLANS: Record<PlanId, {
-  name: string; price: string; blurb: string; cards: number; members: number; aiPerMonth: number;
+  name: string; price: string; period: string; blurb: string; cards: number; members: number; aiPerMonth: number;
   budgets: boolean; policies: boolean; features: string[];
 }> = {
   starter: {
-    name: 'Starter', price: '$0', blurb: 'Spend control and AI analysis for early-stage teams.',
+    name: 'Starter', price: '$0', period: '', blurb: 'Spend control and AI analysis for early-stage teams.',
     cards: 5, members: 5, aiPerMonth: 5, budgets: false, policies: false,
     features: ['Up to 5 virtual cards', 'Up to 5 team members', 'Transactions and receipt capture', 'Bill approvals', '5 AI analyses per month'],
   },
   growth: {
-    name: 'Growth', price: '$12', blurb: 'Policy automation, live budgets and forecasting for scaling companies.',
+    name: 'Growth', price: '$47', period: 'per workspace per month', blurb: 'Policy automation, live budgets and forecasting for scaling companies.',
     cards: Infinity, members: Infinity, aiPerMonth: 100, budgets: true, policies: true,
-    features: ['Unlimited virtual cards and members', 'Spend policies and automated approvals', 'Live budgets and month-end forecast', '100 AI analyses per month', 'Priority support'],
+    features: ['Unlimited virtual cards and members', 'Spend policies and automated approvals', 'Live budgets and month-end forecast', '100 AI analyses per month'],
   },
-  enterprise: {
-    name: 'Enterprise', price: 'Custom', blurb: 'Custom terms for multi-entity finance organizations.',
+  scale: {
+    name: 'Scale', price: '$57', period: 'per workspace per month', blurb: 'Higher AI capacity and priority support for finance-led organizations.',
     cards: Infinity, members: Infinity, aiPerMonth: 1000, budgets: true, policies: true,
-    features: ['Everything in Growth', 'Named account manager', 'Custom onboarding', 'Security review and service levels', '1,000 AI analyses per month'],
+    features: ['Everything in Growth', '1,000 AI analyses per month', 'Priority support'],
   },
 };
-export const growthLink = () => process.env.NEXT_PUBLIC_PAYMENT_LINK_GROWTH || '';
+const DEFAULT_LINKS: Record<'growth' | 'scale', string> = {
+  growth: 'https://selar.com/47plan?currency=USD',
+  scale: 'https://selar.com/57plan?currency=USD',
+};
+export const checkoutLink = (p: 'growth' | 'scale') =>
+  (p === 'growth' ? process.env.NEXT_PUBLIC_PAYMENT_LINK_GROWTH : process.env.NEXT_PUBLIC_PAYMENT_LINK_SCALE) || DEFAULT_LINKS[p];
 export function planFor(id: string | null | undefined) { return PLANS[(id as PlanId) in PLANS ? (id as PlanId) : 'starter']; }

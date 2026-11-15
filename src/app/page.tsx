@@ -29,8 +29,8 @@ const faqs = [
   ['Does SpendSphere issue payment cards or hold funds?', 'No. SpendSphere is the control and record layer for business spend. It does not issue payment cards, hold funds or move money. Marking a bill paid records a payment made through your own bank.'],
   ['What does the AI engine actually do?', 'It analyzes your transactions, budgets and bills, explains the drivers behind your spend and answers questions in plain language. Calculations, limits and approvals are deterministic, so figures are never estimated by a model.'],
   ['Who can see what?', 'Admins manage the workspace. Managers run cards, bills, approvals and budgets. Employees see only their own cards and transactions. Access is enforced in the database through row-level security.'],
-  ['What does the free plan include?', 'Starter includes up to 5 cards, 5 team members, receipts, bill approvals and 5 AI analyses per month. Growth adds unlimited cards and members, spend policies and live budgets.'],
-  ['How does upgrading work?', 'Admins upgrade from Billing. A plan changes only after payment is confirmed by the payment provider.'],
+  ['What does the free plan include?', 'Starter includes up to 5 cards, 5 team members, receipts, bill approvals and 5 AI analyses per month. Growth ($47 per workspace per month) adds unlimited cards and members, spend policies and live budgets. Scale ($57) raises AI capacity to 1,000 analyses per month and adds priority support.'],
+  ['How does upgrading work?', 'Admins upgrade from Billing. A plan is activated only after payment is confirmed, never just because someone returns from checkout.'],
 ];
 
 export default function Home() {

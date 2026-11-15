@@ -20,18 +20,22 @@ Reference audit and design notes: [docs/AUDIT.md](docs/AUDIT.md).
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only. Used by the payment webhook to change plans |
 | `NEXT_PUBLIC_SITE_URL` | Public URL used in auth emails |
 | `GEMINI_API_KEY`, `GEMINI_MODEL` | AI insights (optional) |
-| `NEXT_PUBLIC_PAYMENT_LINK_GROWTH` | Your Stripe Payment Link for Growth |
-| `STRIPE_WEBHOOK_SECRET` | Signing secret for the webhook endpoint |
-| `STRIPE_PAYMENT_LINK_ID_GROWTH` | The `plink_...` ID, so the webhook can map a payment to the Growth plan |
+| `NEXT_PUBLIC_PAYMENT_LINK_GROWTH`, `NEXT_PUBLIC_PAYMENT_LINK_SCALE` | Selar checkout links (default to the $47 and $57 links) |
 
 ## Payments
-The billing page appends `client_reference_id=<org id>` to your payment link. Point a Stripe webhook at `/api/webhooks/payments` for `checkout.session.completed`, `customer.subscription.deleted` and `invoice.payment_failed`. Plans change only after the signature is verified and payment is confirmed. Returning from checkout never activates a plan. `plan` and `plan_status` columns cannot be written by signed-in users (column grants plus a trigger, migration 0002).
+Growth ($47) and Scale ($57) are per workspace per month and are paid through Selar links from the Billing page. Nothing activates automatically from a payment page return. After you confirm a payment in Selar, activate the plan:
+
+```
+node scripts/activate-plan.mjs buyer@company.com growth
+```
+
+The script needs `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in the environment, and finds the workspace by the buyer's sign-in email. Run migration `0003_scale_plan.sql` first. `plan` and `plan_status` cannot be edited by signed-in users (migration 0002). Automatic activation needs Selar's webhook details, which are not implemented.
 
 ## Deploy to Vercel
-Import the repo, add the variables above, deploy, then register the webhook URL `https://<domain>/api/webhooks/payments` and the Supabase redirect URL.
+Import the repo, add the variables above, deploy, then set the Supabase Site URL and redirect URL to your domain.
 
 ## Tests
-`npm test` runs the policy engine and webhook signature tests. `npm run typecheck` and `npm run build` must pass.
+`npm test` runs the policy engine tests. `npm run typecheck` and `npm run build` must pass.
 
 ## Roles
 admin (everything), manager (cards, bills, approvals, budgets), employee (own cards and transactions). Enforced by Postgres Row Level Security, not only the UI.

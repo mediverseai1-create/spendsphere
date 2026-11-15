@@ -29,14 +29,16 @@ export async function signUp(fd: FormData) {
     .safeParse({ email: fd.get('email'), password: fd.get('password'), name: fd.get('name'), company: fd.get('company') });
   if (!p.success) back('/signup', p.error.issues[0].message);
   const d = p.data!;
+  const plan = ['growth', 'scale'].includes(String(fd.get('plan'))) ? String(fd.get('plan')) : '';
+  const dest = plan ? `/billing?plan=${plan}` : '/dashboard';
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email: d.email, password: d.password,
-    options: { data: { full_name: d.name, company: d.company }, emailRedirectTo: `${await origin()}/auth/callback` },
+    options: { data: { full_name: d.name, company: d.company }, emailRedirectTo: `${await origin()}/auth/callback?next=${encodeURIComponent(dest)}` },
   });
   if (error) back('/signup', error.message);
   if (!data?.session) redirect('/login?ok=' + encodeURIComponent('Check your email to confirm your account, then sign in.'));
-  redirect('/dashboard');
+  redirect(dest);
 }
 
 export async function signOut() {
