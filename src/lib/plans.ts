@@ -1,22 +1,22 @@
 export type PlanId = 'starter' | 'growth' | 'scale';
 export const PLANS: Record<PlanId, {
   name: string; price: string; period: string; blurb: string; cards: number; members: number; aiPerMonth: number;
-  budgets: boolean; policies: boolean; features: string[];
+  budgets: boolean; policies: boolean; advanced: boolean; features: string[];
 }> = {
   starter: {
     name: 'Starter', price: '$0', period: '', blurb: 'Spend control and AI analysis for early-stage teams.',
-    cards: 5, members: 5, aiPerMonth: 5, budgets: false, policies: false,
+    cards: 5, members: 5, aiPerMonth: 5, budgets: false, policies: false, advanced: false,
     features: ['Up to 5 virtual cards', 'Up to 5 team members', 'Transactions and receipt capture', 'Bill approvals', '5 AI analyses per month'],
   },
   growth: {
     name: 'Growth', price: '$47', period: 'per workspace per month', blurb: 'Policy automation, live budgets and forecasting for scaling companies.',
-    cards: Infinity, members: Infinity, aiPerMonth: 100, budgets: true, policies: true,
+    cards: Infinity, members: Infinity, aiPerMonth: 100, budgets: true, policies: true, advanced: false,
     features: ['Unlimited virtual cards and members', 'Spend policies and automated approvals', 'Live budgets and month-end forecast', '100 AI analyses per month'],
   },
   scale: {
-    name: 'Scale', price: '$57', period: 'per workspace per month', blurb: 'Higher AI capacity and priority support for finance-led organizations.',
-    cards: Infinity, members: Infinity, aiPerMonth: 1000, budgets: true, policies: true,
-    features: ['Everything in Growth', '1,000 AI analyses per month', 'Priority support'],
+    name: 'Scale', price: '$57', period: 'per workspace per month', blurb: 'Reporting, exports and higher AI capacity for finance-led organizations.',
+    cards: Infinity, members: Infinity, aiPerMonth: 1000, budgets: true, policies: true, advanced: true,
+    features: ['Everything in Growth', '1,000 AI analyses per month', 'CSV export of transactions and bills', 'Six-month spend trend reports', 'Priority support'],
   },
 };
 const DEFAULT_LINKS: Record<'growth' | 'scale', string> = {

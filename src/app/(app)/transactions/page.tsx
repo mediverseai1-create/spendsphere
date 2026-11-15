@@ -2,6 +2,7 @@ import { getCtx } from '@/lib/auth';
 import { money, dateFmt, CATEGORIES } from '@/lib/format';
 import { PageHeader, Flash, Empty, Badge, statusTone, label, Field } from '@/components/ui';
 import { createTransaction } from '../actions';
+import { planFor } from '@/lib/plans';
 
 export const metadata = { title: 'Transactions' };
 export default async function Transactions({ searchParams }: { searchParams: Promise<{ e?: string; ok?: string; q?: string; status?: string }> }) {
@@ -20,7 +21,7 @@ export default async function Transactions({ searchParams }: { searchParams: Pro
   const today = new Date().toISOString().slice(0, 10);
   return (
     <>
-      <PageHeader title="Transactions" desc="Every card charge and reimbursement, checked against your policy." />
+      <PageHeader title="Transactions" desc="Every card charge and reimbursement, checked against your policy." action={planFor(c.planStatus === 'canceled' ? 'starter' : c.plan).advanced && c.role !== 'employee' ? <a className="btn-ghost btn-sm" href="/export/transactions">Export CSV</a> : undefined} />
       <Flash e={sp.e} ok={sp.ok} />
       <details className="card mb-6 p-5">
         <summary className="cursor-pointer font-semibold">Record a transaction</summary>

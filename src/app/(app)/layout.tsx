@@ -10,7 +10,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const mgr = isManager(c);
   const items = [
     ['Dashboard', '/dashboard'], ['Cards', '/cards'], ['Transactions', '/transactions'],
-    ...(mgr ? [['Bills', '/bills'], ['Approvals', '/approvals']] : []), ['Budgets', '/budgets'], ['Insights', '/insights'],
+    ...(mgr ? [['Bills', '/bills'], ['Approvals', '/approvals']] : []), ['Budgets', '/budgets'], ['Insights', '/insights'], ...(mgr ? [['Reports', '/reports']] : []),
     ['Team', '/team'], ['Billing', '/billing'], ['Settings', '/settings'],
   ];
   return (

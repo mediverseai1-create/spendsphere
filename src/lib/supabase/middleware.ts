@@ -3,7 +3,7 @@ const _c = null as unknown as { name: string; value: string; options: CookieOpti
 type CookieList = (typeof _c)[];
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PROTECTED = ['/dashboard', '/cards', '/transactions', '/bills', '/budgets', '/approvals', '/team', '/insights', '/billing', '/settings'];
+const PROTECTED = ['/dashboard', '/cards', '/transactions', '/bills', '/budgets', '/approvals', '/team', '/insights', '/billing', '/settings', '/reports', '/export'];
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });

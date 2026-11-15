@@ -53,6 +53,6 @@ export function Bar({ pct }: { pct: number }) {
   const p = Math.min(100, Math.max(0, pct));
   return <div className="h-2 w-full rounded-full bg-ink-100" role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}><div className={`h-2 rounded-full ${pct > 100 ? 'bg-bad' : pct > 80 ? 'bg-warn' : 'bg-ok'}`} style={{ width: `${p}%` }} /></div>;
 }
-export function UpgradeNote({ feature }: { feature: string }) {
-  return <Empty title={`${feature} is included in Growth`} desc="Upgrade the workspace to enable it for every team member."><Link href="/billing" className="btn-primary">Go to Billing</Link></Empty>;
+export function UpgradeNote({ feature, plan = 'Growth' }: { feature: string; plan?: string }) {
+  return <Empty title={`${feature} is included in ${plan}`} desc="Upgrade the workspace to enable it for every team member."><Link href="/billing" className="btn-primary">Go to Billing</Link></Empty>;
 }
